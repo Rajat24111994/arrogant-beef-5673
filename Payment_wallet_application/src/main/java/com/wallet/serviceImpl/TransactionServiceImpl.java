@@ -5,6 +5,7 @@ import org.hibernate.TransactionException;
 
 import com.wallet.entity.Transaction;
 import com.wallet.service.TransactionService;
+import com.wallet.utils.DbUtils.GetConnection;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -16,8 +17,8 @@ public class TransactionServiceImpl implements TransactionService {
     private EntityManager entityManager;
 
     public TransactionServiceImpl() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("wallet_jpa");
-        entityManager = entityManagerFactory.createEntityManager();
+        entityManager = GetConnection.getEmf().createEntityManager();
+       
     }
 
     @Override

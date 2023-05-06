@@ -2,6 +2,7 @@ package com.wallet.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,6 +19,8 @@ public class BillPayment {
     @JoinColumn(name = "wallet_id")
     private Wallet wallet;
     private int billid;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fkBilltype_id")
     private BillType billtype;
     private double amount;
     private LocalDate paymentDate;

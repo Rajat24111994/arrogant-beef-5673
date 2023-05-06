@@ -1,10 +1,14 @@
 package com.wallet.serviceImpl;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Scanner;
 
 import com.wallet.entity.Customer;
+import com.wallet.entity.Wallet;
 import com.wallet.exception.CustomerException;
 import com.wallet.service.CustomerService;
+import com.wallet.utils.DbUtils.GetConnection;
 
 import jakarta.persistence.EntityManager;
 
@@ -13,7 +17,7 @@ public class CustomerServiceImpl implements CustomerService {
     private EntityManager entityManager;
 
     public CustomerServiceImpl() {
-        this.entityManager = entityManager;
+        this.entityManager =  GetConnection.getEmf().createEntityManager();
     }
 
     @Override
@@ -77,5 +81,17 @@ public class CustomerServiceImpl implements CustomerService {
             entityManager.getTransaction().rollback();
             throw new CustomerException("Failed to update customer.", e);
         }
+    }
+    
+    @Override
+    public Customer registerCustomer(Scanner sc){
+    	System.out.println("Enter name");
+    	String name= sc.next();
+    	System.out.println("Enter mob no");
+    	String mobileNo=sc.next();
+    	System.out.println("Enter password");
+    	String password= sc.next();
+    	Wallet newWallet= new Wallet( new BigDecimal("00.00"));
+    	return new Customer(name,mobileNo,password,newWallet);
     }
 }

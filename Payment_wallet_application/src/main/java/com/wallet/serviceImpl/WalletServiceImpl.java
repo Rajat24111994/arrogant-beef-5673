@@ -4,19 +4,18 @@ import java.util.List;
 
 import com.wallet.entity.Wallet;
 import com.wallet.service.WalletService;
+import com.wallet.utils.DbUtils.GetConnection;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
 public class WalletServiceImpl implements WalletService {
 
-    private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("wallet");
+
 
     @Override
     public void addWallet(Wallet wallet) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = GetConnection.getEmf().createEntityManager();
         try {
             entityManager.getTransaction().begin();
             entityManager.persist(wallet);
@@ -31,7 +30,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public void removeWallet(Wallet wallet) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = GetConnection.getEmf().createEntityManager();
         try {
             entityManager.getTransaction().begin();
             entityManager.remove(wallet);
@@ -46,7 +45,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public List<Wallet> viewAllWallets() {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = GetConnection.getEmf().createEntityManager();
         try {
             TypedQuery<Wallet> query = entityManager.createQuery("SELECT w FROM Wallet w", Wallet.class);
             return query.getResultList();
@@ -57,7 +56,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public void updateWallet(Wallet wallet) {
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = GetConnection.getEmf().createEntityManager();
         try {
             entityManager.getTransaction().begin();
             entityManager.merge(wallet);

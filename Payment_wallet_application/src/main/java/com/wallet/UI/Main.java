@@ -1,16 +1,19 @@
 package com.wallet.UI;
 import java.util.Scanner;
 
-import com.wallet.service.BankAccountService;
+import com.wallet.entity.Customer;
 import com.wallet.service.CustomerService;
 import com.wallet.service.TransactionService;
 import com.wallet.service.WalletService;
 import com.wallet.serviceImpl.CustomerServiceImpl;
 import com.wallet.serviceImpl.TransactionServiceImpl;
 import com.wallet.serviceImpl.WalletServiceImpl;
+import com.wallet.utils.DbUtils.GetConnection;
+
+import jakarta.persistence.EntityManagerFactory;
 
 public class Main {
-    
+    EntityManagerFactory emf= GetConnection.getEmf();
     private static Scanner sc = new Scanner(System.in);
     private static CustomerService customerService = new CustomerServiceImpl();
     private static WalletService walletService = new WalletServiceImpl();
@@ -42,7 +45,8 @@ public class Main {
             
             switch(choice) {
                 case 1:
-                    // Register new customer
+                Customer customer=	customerService.registerCustomer(sc);
+                customerService.addCustomer(customer);
                     break;
                 case 2:
                     // Login as customer
